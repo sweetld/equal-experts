@@ -18,4 +18,9 @@ public class ShoppingCart {
             contents.add(product);
         });
     }
+
+    public void add(Product product) {
+        contents.add(product);
+        total = total.add(product.getPrice());
+    }
 }
