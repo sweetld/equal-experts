@@ -1,6 +1,5 @@
 package com.tempestiva;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -45,6 +44,29 @@ public class StepOneTest {
         // Cleanup
         shoppingCart = null;
         doveSoap = null;
+    }
+
+    @Test
+    public final void addProductsToTheShoppingCart() {
+        // When:
+        // The user adds 5 Dove Soaps to the shopping cart
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            products.add(doveSoap);
+        }
+        shoppingCart.add(products);
+
+        // Then:
+        // The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
+        final int[] count = {0};
+        shoppingCart.getContents().forEach(product -> {
+            Assert.assertEquals("Dove Soap", product.getName());
+            Assert.assertEquals(new BigDecimal("39.99"), product.getPrice());
+            count[0]++;
+        });
+        Assert.assertEquals(5, count[0]);
+        // And the shopping cart’s total price should equal 199.95
+        Assert.assertEquals(new BigDecimal("199.95"), shoppingCart.getTotal());
     }
 
     @Test

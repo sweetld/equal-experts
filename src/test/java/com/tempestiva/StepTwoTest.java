@@ -48,6 +48,33 @@ public class StepTwoTest {
     }
 
     @Test
+    public final void addAdditionalProductsOfTheSameTypeToTheShoppingCart() {
+        // When:
+        // The user adds 5 Dove Soaps to the shopping cart
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            products.add(doveSoap);
+        }
+        shoppingCart.add(products);
+        // And then adds another 3 Dove Soaps to the shopping cart
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
+
+        // Then:
+        // The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99
+        final int[] count = {0};
+        shoppingCart.getContents().forEach(product -> {
+            Assert.assertEquals("Dove Soap", product.getName());
+            Assert.assertEquals(new BigDecimal("39.99"), product.getPrice());
+            count[0]++;
+        });
+        Assert.assertEquals(8, count[0]);
+        // And the shopping cart’s total price should equal 319.92
+        Assert.assertEquals(new BigDecimal("319.92"), shoppingCart.getTotal());
+    }
+
+    @Test
     public final void whenAnotherThreeDoveSoapsAddedThenTotalPriceShouldBeEightTimesUnitPrice() {
         // When
         List<Product> products = new ArrayList<>();
