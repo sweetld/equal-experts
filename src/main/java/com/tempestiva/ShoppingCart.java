@@ -12,8 +12,8 @@ public class ShoppingCart {
     private List<Product> contents = new ArrayList<>();
     private BigDecimal total = BigDecimal.ZERO;
 
-    public void add(final List<Product> items) {
-        items.forEach(product -> {
+    public void add(final List<Product> products) {
+        products.forEach(product -> {
             total = total.add(product.getPrice());
             contents.add(product);
         });

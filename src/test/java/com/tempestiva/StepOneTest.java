@@ -1,5 +1,7 @@
 package com.tempestiva;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,6 +26,7 @@ The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
 And the shopping cart’s total price should equal 199.95
 
 */
+@Slf4j
 public class StepOneTest {
     private ShoppingCart shoppingCart;
     private Product doveSoap;
@@ -47,13 +50,31 @@ public class StepOneTest {
     @Test
     public final void whenFiveDoveSoapsAddedThenTotalPriceShouldBeFiveTimesUnitPrice() {
         // When
-        List<Product> items = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            items.add(doveSoap);
+            products.add(doveSoap);
         }
-        shoppingCart.add(items);
+        shoppingCart.add(products);
 
         // Then
         Assert.assertEquals(new BigDecimal("199.95"), shoppingCart.getTotal());
+    }
+
+    @Test
+    public final void whenFiveProductsAddedThenCartShouldContainFiveThings() {
+        // When
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            products.add(doveSoap);
+        }
+        shoppingCart.add(products);
+
+        // Then
+        Assert.assertEquals(5, shoppingCart.getContents().size());
+    }
+
+    @Test
+    public final void whenNoProductsAddedThenCartShouldBeEmpty() {
+        Assert.assertEquals(0, shoppingCart.getContents().size());
     }
 }
