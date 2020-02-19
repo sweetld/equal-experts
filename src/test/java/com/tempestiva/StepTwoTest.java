@@ -99,4 +99,34 @@ public class StepTwoTest {
     public final void whenNoProductsAddedThenCartShouldBeEmpty() {
         Assert.assertEquals(0, shoppingCart.getContents().size());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenNullProductAddedThenShouldThrowException() {
+        shoppingCart.add(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAndPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithEmptyNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("", new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99")));
+    }
 }
