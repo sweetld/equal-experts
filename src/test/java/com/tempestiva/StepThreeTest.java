@@ -1,14 +1,13 @@
 package com.tempestiva;
 
-import lombok.extern.slf4j.Slf4j;
+import com.tempestiva.step1.Product;
+import com.tempestiva.step1.ShoppingCart;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
 
@@ -30,7 +29,6 @@ And the total sales tax amount for the shopping cart should equal 35.00
 And the shopping cart’s total price should equal 314.96
 
 */
-@Slf4j
 public class StepThreeTest {
     private ShoppingCart shoppingCart;
     private Product doveSoap;
@@ -71,11 +69,9 @@ public class StepThreeTest {
     @Test
     public final void whenEightProductsAddedThenCartShouldContainEightThings() {
         // When
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
 
         // Then
         Assert.assertEquals(8, shoppingCart.getContents().size());

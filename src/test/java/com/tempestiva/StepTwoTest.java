@@ -1,14 +1,13 @@
 package com.tempestiva;
 
-import lombok.extern.slf4j.Slf4j;
+import com.tempestiva.step2.Product;
+import com.tempestiva.step2.ShoppingCart;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
 
@@ -26,7 +25,6 @@ The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99
 And the shopping cart’s total price should equal 319.92
 
 */
-@Slf4j
 public class StepTwoTest {
     private ShoppingCart shoppingCart;
     private Product doveSoap;
@@ -51,11 +49,9 @@ public class StepTwoTest {
     public final void addAdditionalProductsOfTheSameTypeToTheShoppingCart() {
         // When:
         // The user adds 5 Dove Soaps to the shopping cart
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
         // And then adds another 3 Dove Soaps to the shopping cart
         shoppingCart.add(doveSoap);
         shoppingCart.add(doveSoap);
@@ -77,11 +73,9 @@ public class StepTwoTest {
     @Test
     public final void whenAnotherThreeDoveSoapsAddedThenTotalPriceShouldBeEightTimesUnitPrice() {
         // When
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
         shoppingCart.add(doveSoap);
         shoppingCart.add(doveSoap);
         shoppingCart.add(doveSoap);
@@ -93,11 +87,9 @@ public class StepTwoTest {
     @Test
     public final void whenEightProductsAddedThenCartShouldContainEightThings() {
         // When
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
 
         // Then
         Assert.assertEquals(8, shoppingCart.getContents().size());

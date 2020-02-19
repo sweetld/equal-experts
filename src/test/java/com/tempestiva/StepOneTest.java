@@ -1,14 +1,13 @@
 package com.tempestiva;
 
-import lombok.extern.slf4j.Slf4j;
+import com.tempestiva.step1.Product;
+import com.tempestiva.step1.ShoppingCart;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
 
@@ -25,7 +24,6 @@ The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
 And the shopping cart’s total price should equal 199.95
 
 */
-@Slf4j
 public class StepOneTest {
     private ShoppingCart shoppingCart;
     private Product doveSoap;
@@ -50,11 +48,9 @@ public class StepOneTest {
     public final void addProductsToTheShoppingCart() {
         // When:
         // The user adds 5 Dove Soaps to the shopping cart
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
 
         // Then:
         // The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
@@ -72,11 +68,9 @@ public class StepOneTest {
     @Test
     public final void whenFiveDoveSoapsAddedThenTotalPriceShouldBeFiveTimesUnitPrice() {
         // When
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
 
         // Then
         Assert.assertEquals(new BigDecimal("199.95"), shoppingCart.getTotal());
@@ -85,11 +79,9 @@ public class StepOneTest {
     @Test
     public final void whenFiveProductsAddedThenCartShouldContainFiveThings() {
         // When
-        List<Product> products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(doveSoap);
+            shoppingCart.add(doveSoap);
         }
-        shoppingCart.add(products);
 
         // Then
         Assert.assertEquals(5, shoppingCart.getContents().size());
@@ -99,4 +91,35 @@ public class StepOneTest {
     public final void whenNoProductsAddedThenCartShouldBeEmpty() {
         Assert.assertEquals(0, shoppingCart.getContents().size());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenNullProductAddedThenShouldThrowException() {
+        shoppingCart.add(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAndPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithEmptyNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("", new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99")));
+    }
+
 }

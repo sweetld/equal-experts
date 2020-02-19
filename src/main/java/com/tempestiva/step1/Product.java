@@ -1,4 +1,4 @@
-package com.tempestiva;
+package com.tempestiva.step1;
 
 import lombok.Data;
 import lombok.Value;
