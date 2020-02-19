@@ -40,10 +40,10 @@ public class StepThreeTest {
         shoppingCart = new ShoppingCart();
 
         // Create a Product, Dove Soap, with unit price of 39.99
-        doveSoap = new Product("Dove Soap", new BigDecimal("39.99"));
+        doveSoap = new Product("Dove Soap", new BigDecimal("39.99"), new BigDecimal("12.5"));
 
         // Create a Product, Axe Deo, with unit price of 99.99
-        axeDeo = new Product("Axe Deo", new BigDecimal("99.99"));
+        axeDeo = new Product("Axe Deo", new BigDecimal("99.99"), new BigDecimal("12.5"));
     }
 
     @After
@@ -81,7 +81,7 @@ public class StepThreeTest {
         Assert.assertEquals(2, count[0]);
         Assert.assertEquals(2, count[1]);
         // And the total sales tax amount for the shopping cart should equal 35.00
-        Assert.assertEquals(new BigDecimal("35"), shoppingCart.getTax());
+        Assert.assertEquals(new BigDecimal("35.00"), shoppingCart.getTax());
         // And the shopping cart’s total price should equal 314.96
         Assert.assertEquals(new BigDecimal("314.96"), shoppingCart.getTotal());
     }
@@ -121,26 +121,26 @@ public class StepThreeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithoutPriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("Dove Soap", null));
+        shoppingCart.add(new Product("Dove Soap", null, new BigDecimal("12.5")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithoutNameAddedThenShouldThrowException() {
-        shoppingCart.add(new Product(null, new BigDecimal("39.99")));
+        shoppingCart.add(new Product(null, new BigDecimal("39.99"), new BigDecimal("12.5")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithoutNameAndPriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product(null, null));
+        shoppingCart.add(new Product(null, null, new BigDecimal("12.5")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithEmptyNameAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("", new BigDecimal("39.99")));
+        shoppingCart.add(new Product("", new BigDecimal("39.99"), new BigDecimal("12.5")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99")));
+        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99"), new BigDecimal("12.5")));
     }
 }

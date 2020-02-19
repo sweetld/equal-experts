@@ -15,13 +15,10 @@ public class ShoppingCart {
     public void add(Product product) throws IllegalArgumentException {
         if (product == null)
             throw new IllegalArgumentException("Cannot add null to the Shopping Cart");
-        if (product.getPrice() == null)
-            throw new IllegalArgumentException("Product has no Price");
-        if (product.getPrice().compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Product Price is negative");
-        if (product.getName() == null || product.getName().length() < 1)
-            throw new IllegalArgumentException("Product has no Name");
         contents.add(product);
-        total = total.add(product.getPrice());
+        // Keep a running total of the tax
+        tax = tax.add(product.getSalesTax());
+        // Keep an overall running total
+        total = total.add(product.getPrice().add(product.getSalesTax()));
     }
 }
