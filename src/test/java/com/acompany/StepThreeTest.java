@@ -1,7 +1,7 @@
-package com.tempestiva;
+package com.acompany;
 
-import com.tempestiva.step3.Product;
-import com.tempestiva.step3.ShoppingCart;
+import com.acompany.step3.Product;
+import com.acompany.step3.ShoppingCart;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

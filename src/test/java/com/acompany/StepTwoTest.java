@@ -1,7 +1,7 @@
-package com.tempestiva;
+package com.acompany;
 
-import com.tempestiva.step1.Product;
-import com.tempestiva.step1.ShoppingCart;
+import com.acompany.step2.Product;
+import com.acompany.step2.ShoppingCart;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,13 +18,14 @@ And a product, Dove Soap with a unit price of 39.99
 When:
 
 The user adds 5 Dove Soaps to the shopping cart
+And then adds another 3 Dove Soaps to the shopping cart
 Then:
 
-The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
-And the shopping cart’s total price should equal 199.95
+The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99
+And the shopping cart’s total price should equal 319.92
 
 */
-public class StepOneTest {
+public class StepTwoTest {
     private ShoppingCart shoppingCart;
     private Product doveSoap;
 
@@ -45,46 +46,53 @@ public class StepOneTest {
     }
 
     @Test
-    public final void addProductsToTheShoppingCart() {
+    public final void addAdditionalProductsOfTheSameTypeToTheShoppingCart() {
         // When:
         // The user adds 5 Dove Soaps to the shopping cart
         for (int i = 0; i < 5; i++) {
             shoppingCart.add(doveSoap);
         }
+        // And then adds another 3 Dove Soaps to the shopping cart
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
 
         // Then:
-        // The shopping cart should contain 5 Dove Soaps each with a unit price of 39.99
+        // The shopping cart should contain 8 Dove Soaps each with a unit price of 39.99
         final int[] count = {0};
         shoppingCart.getContents().forEach(product -> {
             Assert.assertEquals("Dove Soap", product.getName());
             Assert.assertEquals(new BigDecimal("39.99"), product.getPrice());
             count[0]++;
         });
-        Assert.assertEquals(5, count[0]);
-        // And the shopping cart’s total price should equal 199.95
-        Assert.assertEquals(new BigDecimal("199.95"), shoppingCart.getTotal());
+        Assert.assertEquals(8, count[0]);
+        // And the shopping cart’s total price should equal 319.92
+        Assert.assertEquals(new BigDecimal("319.92"), shoppingCart.getTotal());
     }
 
     @Test
-    public final void whenFiveDoveSoapsAddedThenTotalPriceShouldBeFiveTimesUnitPrice() {
+    public final void whenAnotherThreeDoveSoapsAddedThenTotalPriceShouldBeEightTimesUnitPrice() {
         // When
         for (int i = 0; i < 5; i++) {
             shoppingCart.add(doveSoap);
         }
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
 
         // Then
-        Assert.assertEquals(new BigDecimal("199.95"), shoppingCart.getTotal());
+        Assert.assertEquals(new BigDecimal("319.92"), shoppingCart.getTotal());
     }
 
     @Test
-    public final void whenFiveProductsAddedThenCartShouldContainFiveThings() {
+    public final void whenEightProductsAddedThenCartShouldContainEightThings() {
         // When
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 8; i++) {
             shoppingCart.add(doveSoap);
         }
 
         // Then
-        Assert.assertEquals(5, shoppingCart.getContents().size());
+        Assert.assertEquals(8, shoppingCart.getContents().size());
     }
 
     @Test
@@ -133,5 +141,4 @@ public class StepOneTest {
     public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
         shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99")));
     }
-
 }

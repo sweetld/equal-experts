@@ -1,6 +1,5 @@
-package com.tempestiva.step1;
+package com.acompany.step2;
 
-import lombok.Data;
 import lombok.Value;
 
 import java.math.BigDecimal;

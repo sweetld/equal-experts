@@ -1,4 +1,4 @@
-package com.tempestiva.step2;
+package com.acompany.step1;
 
 import lombok.Value;
 
