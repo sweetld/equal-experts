@@ -114,6 +114,14 @@ public class StepThreeTest {
         Assert.assertEquals(0, shoppingCart.getContents().size());
     }
 
+    @Test
+    public final void whenProductWithPriceScaleGreaterThanTwoThenShouldRoundHalfUp() {
+        Product roundUpProduct = new Product("Dove Soap", new BigDecimal("10.0054"), new BigDecimal("12.5"));
+        Assert.assertEquals(new BigDecimal("10.01"), roundUpProduct.getPrice());
+        Product roundDownProduct = new Product("Dove Soap", new BigDecimal("10.0144"), new BigDecimal("12.5"));
+        Assert.assertEquals(new BigDecimal("10.01"), roundDownProduct.getPrice());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public final void whenNullProductAddedThenShouldThrowException() {
         shoppingCart.add(null);
@@ -132,6 +140,11 @@ public class StepThreeTest {
     @Test(expected = IllegalArgumentException.class)
     public final void whenProductWithoutNameAndPriceThenShouldThrowException() {
         new Product(null, null, new BigDecimal("12.5"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAndPriceAndSalesTaxRateThenShouldThrowException() {
+        new Product(null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)

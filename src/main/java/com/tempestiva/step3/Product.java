@@ -25,17 +25,17 @@ public class Product {
             throw new IllegalArgumentException("Product has no Name");
         if (price == null)
             throw new IllegalArgumentException("Product has no Price");
+        if (salesTaxRate == null)
+            throw new IllegalArgumentException("Product has no Sales Tax Rate");
         if (price.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Product Price is negative");
         }
-        if (salesTaxRate == null)
-            throw new IllegalArgumentException("Product has no Sales Tax Rate");
         if (salesTaxRate.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Product Sales Tax Rate is negative");
         }
         this.name = name;
-        this.price = price;
-        this.salesTaxRate = salesTaxRate;
+        this.price = price.setScale(2, RoundingMode.HALF_UP);
+        this.salesTaxRate = salesTaxRate.setScale(2, RoundingMode.HALF_UP);
         // If we calculate the sales tax on this product now, then we only have to calculate it once
         this.salesTax = price.multiply(salesTaxRate).divide(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
     }
