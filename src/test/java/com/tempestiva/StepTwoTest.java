@@ -100,6 +100,18 @@ public class StepTwoTest {
         Assert.assertEquals(0, shoppingCart.getContents().size());
     }
 
+    @Test
+    public final void whenProductsWithPriceScaleGreaterAddedThanTwoThenShouldRoundHalfUp() {
+        // When
+        Product roundUpProduct = new Product("Dove Soap", new BigDecimal("10.0054"));
+        Product roundDownProduct = new Product("Dove Soap", new BigDecimal("10.0144"));
+        shoppingCart.add(roundDownProduct);
+        shoppingCart.add(roundUpProduct);
+
+        // Then
+        Assert.assertEquals(new BigDecimal("20.02"), shoppingCart.getTotal());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public final void whenNullProductAddedThenShouldThrowException() {
         shoppingCart.add(null);

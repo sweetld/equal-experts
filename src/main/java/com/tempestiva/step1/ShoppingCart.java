@@ -3,6 +3,7 @@ package com.tempestiva.step1;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,6 @@ public class ShoppingCart {
         if (product.getName() == null || product.getName().length() < 1)
             throw new IllegalArgumentException("Product has no Name");
         contents.add(product);
-        total = total.add(product.getPrice());
+        total = total.add(product.getPrice().setScale(2, RoundingMode.HALF_UP));
     }
 }

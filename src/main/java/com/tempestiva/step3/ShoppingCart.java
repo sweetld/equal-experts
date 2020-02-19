@@ -3,6 +3,7 @@ package com.tempestiva.step3;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,6 @@ public class ShoppingCart {
         // Keep a running total of the tax
         tax = tax.add(product.getSalesTax());
         // Keep an overall running total
-        total = total.add(product.getPrice().add(product.getSalesTax()));
+        total = total.add(product.getPrice().add(product.getSalesTax())).setScale(2, RoundingMode.HALF_UP);
     }
 }

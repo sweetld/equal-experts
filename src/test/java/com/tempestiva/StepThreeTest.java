@@ -115,10 +115,41 @@ public class StepThreeTest {
     }
 
     @Test
-    public final void whenProductWithPriceScaleGreaterThanTwoThenShouldRoundHalfUp() {
+    public final void whenProductsWithPriceScaleGreaterAddedThanTwoThenShouldRoundHalfUp() {
+        // When
         Product roundUpProduct = new Product("Dove Soap", new BigDecimal("10.0054"), new BigDecimal("12.5"));
-        Assert.assertEquals(new BigDecimal("10.01"), roundUpProduct.getPrice());
         Product roundDownProduct = new Product("Dove Soap", new BigDecimal("10.0144"), new BigDecimal("12.5"));
+        shoppingCart.add(roundDownProduct);
+        shoppingCart.add(roundUpProduct);
+
+        // Then
+        Assert.assertEquals(new BigDecimal("10.01"), roundUpProduct.getPrice());
+        Assert.assertEquals(new BigDecimal("10.01"), roundDownProduct.getPrice());
+        Assert.assertEquals(new BigDecimal("22.52"), shoppingCart.getTotal());
+    }
+
+    @Test
+    public final void whenProductsWithSalesTaxRateScaleGreaterAddedThanTwoThenShouldRoundHalfUp() {
+        // When
+        Product roundUpProduct = new Product("Dove Soap", new BigDecimal("10"), new BigDecimal("12.0056"));
+        Product roundDownProduct = new Product("Dove Soap", new BigDecimal("10"), new BigDecimal("12.0144"));
+        shoppingCart.add(roundDownProduct);
+        shoppingCart.add(roundUpProduct);
+
+        // Then
+        Assert.assertEquals(new BigDecimal("12.01"), roundUpProduct.getSalesTaxRate());
+        Assert.assertEquals(new BigDecimal("12.01"), roundDownProduct.getSalesTaxRate());
+        Assert.assertEquals(new BigDecimal("22.40"), shoppingCart.getTotal());
+    }
+
+    @Test
+    public final void whenProductWithPriceScaleGreaterThanTwoThenShouldRoundHalfUp() {
+        // When
+        Product roundUpProduct = new Product("Dove Soap", new BigDecimal("10.0054"), new BigDecimal("12.5"));
+        Product roundDownProduct = new Product("Dove Soap", new BigDecimal("10.0144"), new BigDecimal("12.5"));
+
+        // Then
+        Assert.assertEquals(new BigDecimal("10.01"), roundUpProduct.getPrice());
         Assert.assertEquals(new BigDecimal("10.01"), roundDownProduct.getPrice());
     }
 
