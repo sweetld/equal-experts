@@ -13,12 +13,18 @@ public class Product {
     private BigDecimal salesTax;
 
     public Product(String name, BigDecimal price, BigDecimal salesTaxRate) throws IllegalArgumentException {
-        if (price == null)
-            throw new IllegalArgumentException("Product has no Price");
-        if (price.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Product Price is negative");
         if (name == null || name.length() < 1)
             throw new IllegalArgumentException("Product has no Name");
+        if (price == null)
+            throw new IllegalArgumentException("Product has no Price");
+        if (price.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Product Price is negative");
+        }
+        if (salesTaxRate == null)
+            throw new IllegalArgumentException("Product has no Sales Tax Rate");
+        if (salesTaxRate.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Product Sales Tax Rate is negative");
+        }
         this.name = name;
         this.price = price;
         // I took the approach that the sales tax rate could be different for different products

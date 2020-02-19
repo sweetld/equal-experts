@@ -120,27 +120,37 @@ public class StepThreeTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void whenProductWithoutPriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("Dove Soap", null, new BigDecimal("12.5")));
+    public final void whenProductWithoutPriceThenShouldThrowException() {
+        new Product("Dove Soap", null, new BigDecimal("12.5"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void whenProductWithoutNameAddedThenShouldThrowException() {
-        shoppingCart.add(new Product(null, new BigDecimal("39.99"), new BigDecimal("12.5")));
+    public final void whenProductWithoutNameThenShouldThrowException() {
+        new Product(null, new BigDecimal("39.99"), new BigDecimal("12.5"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void whenProductWithoutNameAndPriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product(null, null, new BigDecimal("12.5")));
+    public final void whenProductWithoutNameAndPriceThenShouldThrowException() {
+        new Product(null, null, new BigDecimal("12.5"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void whenProductWithEmptyNameAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("", new BigDecimal("39.99"), new BigDecimal("12.5")));
+    public final void whenProductWithEmptyNameThenShouldThrowException() {
+        new Product("", new BigDecimal("39.99"), new BigDecimal("12.5"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
-        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99"), new BigDecimal("12.5")));
+    public final void whenProductWithNegativePriceThenShouldThrowException() {
+        new Product("Dove Soap", new BigDecimal("-0.01"), new BigDecimal("12.5"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutSalesTaxRateThenShouldThrowException() {
+        new Product("Dove Soap", new BigDecimal("39.99"), null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithNegativeSalesTaxRateThenShouldThrowException() {
+        new Product("Dove Soap", new BigDecimal("39.99"), new BigDecimal("-0.01"));
     }
 }
