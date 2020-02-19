@@ -10,6 +10,7 @@ import java.util.List;
 public class ShoppingCart {
     private List<Product> contents = new ArrayList<>();
     private BigDecimal total = BigDecimal.ZERO;
+    private BigDecimal tax = BigDecimal.ZERO;
 
     public void add(Product product) throws IllegalArgumentException {
         if (product == null)

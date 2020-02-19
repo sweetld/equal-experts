@@ -55,6 +55,38 @@ public class StepThreeTest {
     }
 
     @Test
+    public final void calculateTheTaxRateOfTheShoppingCartWithMultipleItems() {
+        // When:
+        // The user adds 2 Dove Soaps to the shopping cart
+        shoppingCart.add(doveSoap);
+        shoppingCart.add(doveSoap);
+        // And then adds 2 Axe Deos to the shopping cart
+        shoppingCart.add(axeDeo);
+        shoppingCart.add(axeDeo);
+
+        // Then:
+        // The shopping cart should contain 2 Dove Soaps each with a unit price of 39.99
+        // And the shopping cart should contain 2 Axe Deos each with a unit price of 99.99
+        final int[] count = {0,0};
+        shoppingCart.getContents().forEach(product -> {
+            if (product.getName().equals("Dove Soap")) {
+                Assert.assertEquals(new BigDecimal("39.99"), product.getPrice());
+                count[0]++;
+            }
+            if (product.getName().equals("Axe Deo")) {
+                Assert.assertEquals(new BigDecimal("99.99"), product.getPrice());
+                count[1]++;
+            }
+        });
+        Assert.assertEquals(2, count[0]);
+        Assert.assertEquals(2, count[1]);
+        // And the total sales tax amount for the shopping cart should equal 35.00
+        Assert.assertEquals(new BigDecimal("35"), shoppingCart.getTax());
+        // And the shopping cart’s total price should equal 314.96
+        Assert.assertEquals(new BigDecimal("314.96"), shoppingCart.getTotal());
+    }
+
+    @Test
     public final void whenAnotherThreeDoveSoapsAddedThenTotalPriceShouldBeEightTimesUnitPrice() {
         // When
         shoppingCart.add(doveSoap);
@@ -80,5 +112,35 @@ public class StepThreeTest {
     @Test
     public final void whenNoProductsAddedThenCartShouldBeEmpty() {
         Assert.assertEquals(0, shoppingCart.getContents().size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenNullProductAddedThenShouldThrowException() {
+        shoppingCart.add(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithoutNameAndPriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product(null, null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithEmptyNameAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("", new BigDecimal("39.99")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void whenProductWithNegativePriceAddedThenShouldThrowException() {
+        shoppingCart.add(new Product("Dove Soap", new BigDecimal("-39.99")));
     }
 }
